@@ -24,7 +24,7 @@ def get_post(db: Session = Depends(get_db),
     # use the below code if you want to retrieve post only for the id of the actual logged user and not all of them
     # posts = db.query(models.Post).filter(models.Post.owner_id == current_user.id).all()
 
-    posts = db.query(models.Post).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()
+    # posts = db.query(models.Post).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()
 
     # sqlalchemy by default implements inner joins
     posts = (

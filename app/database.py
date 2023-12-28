@@ -4,7 +4,7 @@ from app.config import settings
 
 
 # 'driver_name://<username>:<password>@<ip-address:port/db>'
-SQLALCHEMY_DATABASE_URL = (f"postgresql+psycopg://{settings.database_username}:{settings.database_password}@"
+SQLALCHEMY_DATABASE_URL = (f"{settings.driver_name}://{settings.database_username}:{settings.database_password}@"
                            f"{settings.database_hostname}:{settings.database_port}/{settings.database_name}")
 
 # The Engine is responsible for sqlalchemy to connect to postgres
