@@ -4,11 +4,11 @@ from uvicorn import run
 from app.routers import post, user, auth, vote
 
 
-from app import models
-from database import engine
+# from app import models
+# from database import engine
 
 # we no longer need the below line as alembic is going take care to create the DB tables from our models
-models.Base.metadata.create_all(bind=engine)  # It creates all of our SQLAlchemy models
+# models.Base.metadata.create_all(bind=engine)  # It creates all of our SQLAlchemy models
 
 app = FastAPI()
 
