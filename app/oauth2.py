@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from copy import deepcopy
 from . import schemas, database, models
 from sqlalchemy.orm import Session
-from config import settings
+from app.config import settings
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
