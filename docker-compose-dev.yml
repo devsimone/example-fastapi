@@ -1,0 +1,46 @@
+version: "3"
+services:
+  api:
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/usr/src/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    #    env_file:
+#      - ./.env
+    environment:
+      - DRIVER_NAME=postgresql+psycopg
+      - DATABASE_HOSTNAME=postgres  # it's pointing to postgres service
+      - DATABASE_PORT=5432
+      - DATABASE_PASSWORD=rVwQi6bKjjrDNqdpdxJz
+      - DATABASE_NAME=fastapi
+      - DATABASE_USERNAME=postgres
+      - SECRET_KEY=09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=60
+
+    # In the postgres docker container the tables are not creating, so we need to create the tables in order perform the requested action on localhost:8000.
+    # This must be done just the first time being the volume persistent (otherwise without volume it should be executed every time you run the docker-compose)
+    # Follow these steps it has worked for me
+    # 1) Put the command docker ps and find your container ID
+    # 2) Then enter into the bash -> docker exec -t YOUR_CONTAINER_ID bash
+    # 3) Now it will enter into the bash, type -> alembic upgrade head
+    # This will fix the issue by creating the tables to perform the action. Now go to Postman API and run the create user request, it will work. But the only issue is the data is not storing.
+
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=rVwQi6bKjjrDNqdpdxJz
+      - POSTGRES_DB=fastapi
+
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+
+volumes:
+  postgres-db:
+
+
+
