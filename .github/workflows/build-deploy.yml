@@ -9,7 +9,9 @@ on: [push, pull_request]
 #      - "main"
 
 jobs:
-  job1:
+
+#  CI
+  build:
     environment:
       name: testing
     env:
@@ -78,6 +80,15 @@ jobs:
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+
+#  CD
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    steps:
+      - name: deploying
+        run: echo "going to deploy some stuff"
 
 
 
